@@ -56,7 +56,7 @@ local oxyPeds = {
 
 
 local drugLocs = {
-	[1] =  { ['coords'] = vector4(131.94, -1937.95,= 0, 118.59), ['info'] = ' Grove Stash' },
+	[1] =  { ['coords'] = vector4(131.94, -1937.95, 0, 118.59), ['info'] = ' Grove Stash' },
 	[2] =  { ['coords'] = vector4(1390.84, -1507.94, 0, 29.6), ['info'] = ' East Side' },
 	[3] =  { ['coords'] = vector4(-676.81, -877.94, 0, 324.9), ['info'] = ' Wei Cheng' },
 }

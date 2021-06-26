@@ -12,38 +12,38 @@ local drugStorePed = 0
 local oxyVehicle = 0
 
 local OxyDropOffs = {
-	[1] =  { ['x'] = 74.5,['y'] = -762.17,['z'] = 31.68,['h'] = 160.98, ['info'] = ' 1' },
-	[2] =  { ['x'] = 100.58,['y'] = -644.11,['z'] = 44.23,['h'] = 69.11, ['info'] = ' 2' },
-	[3] =  { ['x'] = 175.45,['y'] = -445.95,['z'] = 41.1,['h'] = 92.72, ['info'] = ' 3' },
-	[4] =  { ['x'] = 130.3,['y'] = -246.26,['z'] = 51.45,['h'] = 219.63, ['info'] = ' 4' },
-	[5] =  { ['x'] = 198.1,['y'] = -162.11,['z'] = 56.35,['h'] = 340.09, ['info'] = ' 5' },
-	[6] =  { ['x'] = 341.0,['y'] = -184.71,['z'] = 58.07,['h'] = 159.33, ['info'] = ' 6' },
-	[7] =  { ['x'] = -26.96,['y'] = -368.45,['z'] = 39.69,['h'] = 251.12, ['info'] = ' 7' },
-	[8] =  { ['x'] = -155.88,['y'] = -751.76,['z'] = 33.76,['h'] = 251.82, ['info'] = ' 8' },
+	[1] =  { ['coords'] = vector4(74.5, -762.17, 31.68, 160.98), ['info'] = ' 1' },
+	[2] =  { ['coords'] = vector4(100.58, -644.11, 44.23, 69.11), ['info'] = ' 2' },
+	[3] =  { ['coords'] = vector4(175.45, -445.95, 41.1, 92.72), ['info'] = ' 3' },
+	[4] =  { ['coords'] = vector4(130.3, -246.26,  51.45, 219.63), ['info'] = ' 4' },
+	[5] =  { ['coords'] = vector4(198.1, -162.11, 56.35, 340.09), ['info'] = ' 5' },
+	[6] =  { ['coords'] = vector4(341.0, -184.71, 58.07, 159.33), ['info'] = ' 6' },
+	[7] =  { ['coords'] = vector4(-26.96, -368.45, 39.69, 251.12, ['info'] = ' 7' },
+	[8] =  { ['coords'] = vector4(-155.88, -751.76, 33.76, 251.82), ['info'] = ' 8' },
 
-	[9] =  { ['x'] = -305.02,['y'] = -226.17,['z'] = 36.29,['h'] = 306.04, ['info'] = ' chewy1' },
-	[10] =  { ['x'] = -347.19,['y'] = -791.04,['z'] = 33.97,['h'] = 3.06, ['info'] = ' biscuts2' },
-	[11] =  { ['x'] = -703.75,['y'] = -932.93,['z'] = 19.22,['h'] = 87.86, ['info'] = ' are3' },
-	[12] =  { ['x'] = -659.35,['y'] = -256.83,['z'] = 36.23,['h'] = 118.92, ['info'] = ' only4' },
-	[13] =  { ['x'] = -934.18,['y'] = -124.28,['z'] = 37.77,['h'] = 205.79, ['info'] = ' nice5' },
-	[14] =  { ['x'] = -1214.3,['y'] = -317.57,['z'] = 37.75,['h'] = 18.39, ['info'] = ' ifthey6' },
-	[15] =  { ['x'] = -822.83,['y'] = -636.97,['z'] = 27.9,['h'] = 160.23, ['info'] = ' contain7' },
-	[16] =  { ['x'] = 308.04,['y'] = -1386.09,['z'] = 31.79,['h'] = 47.23, ['info'] = ' chocolate' },
+	[9] =  { ['coords'] = vector4(-305.02, -226.17, 36.29, 306.04), ['info'] = ' chewy1' },
+	[10] =  { ['coords'] = vector4(-347.19, -791.04, 33.97, 3.06), ['info'] = ' biscuts2' },
+	[11] =  { ['coords'] = vector4(-703.75, -932.93, 19.22, 87.86), ['info'] = ' are3' },
+	[12] =  { ['coords'] = vector4(-659.35, -256.83, 36.23, 118.92), ['info'] = ' only4' },
+	[13] =  { ['coords'] = vector4(-934.18, -124.28, 37.77, 205.79), ['info'] = ' nice5' },
+	[14] =  { ['coords'] = vector4(-1214.3, -317.57, 37.75, 18.39), ['info'] = ' ifthey6' },
+	[15] =  { ['coords'] = vector4(-822.83, -636.97, 27.9, 160.23), ['info'] = ' contain7' },
+	[16] =  { ['coords'] = vector4(308.04, -1386.09, 31.79, 47.23), ['info'] = ' chocolate' },
 
 }
 
 local carspawns = {
-	[1] =  { ['x'] = 79.85,['y'] = -1544.99,['z'] = 29.47,['h'] = 51.55, ['info'] = ' car 8' },
-	[2] =  { ['x'] = 66.93,['y'] = -1561.73,['z'] = 29.47,['h'] = 45.73, ['info'] = ' car 1' },
-	[3] =  { ['x'] = 68.57,['y'] = -1559.53,['z'] = 29.47,['h'] = 50.6, ['info'] = ' car 2' },
-	[4] =  { ['x'] = 70.4,['y'] = -1557.12,['z'] = 29.47,['h'] = 51.18, ['info'] = ' car 3' },
-	[5] =  { ['x'] = 72.22,['y'] = -1554.63,['z'] = 29.47,['h'] = 50.32, ['info'] = ' car 4' },
-	[6] =  { ['x'] = 73.99,['y'] = -1552.22,['z'] = 29.47,['h'] = 52.47, ['info'] = ' car 5' },
-	[7] =  { ['x'] = 76.06,['y'] = -1549.87,['z'] = 29.47,['h'] = 51.53, ['info'] = ' car 6' },
-	[8] =  { ['x'] = 77.9,['y'] = -1547.45,['z'] = 29.47,['h'] = 53.24, ['info'] = ' car 7' },
+	[1] =  { ['coords'] = vector4(79.85, -1544.99, 29.47, 51.55), ['info'] = ' car 8' },
+	[2] =  { ['coords'] = vector4(66.93, -1561.73, 29.47, 45.73), ['info'] = ' car 1' },
+	[3] =  { ['coords'] = vector4(68.57, -1559.53, 29.47, 50.6), ['info'] = ' car 2' },
+	[4] =  { ['coords'] = vector4(70.4, -1557.12, 29.47, 51.18), ['info'] = ' car 3' },
+	[5] =  { ['coords'] = vector4(72.22, -1554.63, 29.47, 50.32), ['info'] = ' car 4' },
+	[6] =  { ['coords'] = vector4(73.99, -1552.22, 29.47, 52.47), ['info'] = ' car 5' },
+	[7] =  { ['coords'] = vector4(76.06, -1549.87, 29.47, 51.53), ['info'] = ' car 6' },
+	[8] =  { ['coords'] = vector4(77.9, -1547.45, 29.47, 53.24), ['info'] = ' car 7' },
 }
 
-local pillWorker = { ['x'] = 68.7,['y'] = -1569.87,['z'] = 29.6,['h'] = 230.65, ['info'] = 'boop bap' }
+local pillWorker = { ['coords'] = vector4(68.7, -1569.87, 29.6, 230.65), ['info'] = 'boop bap' }
 
 local rnd = 0
 local blip = 0
@@ -56,9 +56,9 @@ local oxyPeds = {
 
 
 local drugLocs = {
-	[1] =  { ['x'] = 131.94,['y'] = -1937.95,['z'] = 0,['h'] = 118.59, ['info'] = ' Grove Stash' },
-	[2] =  { ['x'] = 1390.84,['y'] = -1507.94,['z'] = 0,['h'] = 29.6, ['info'] = ' East Side' },
-	[3] =  { ['x'] = -676.81,['y'] = -877.94,['z'] = 0,['h'] = 324.9, ['info'] = ' Wei Cheng' },
+	[1] =  { ['coords'] = vector4(131.94, -1937.95,= 0, 118.59), ['info'] = ' Grove Stash' },
+	[2] =  { ['coords'] = vector4(1390.84, -1507.94, 0, 29.6), ['info'] = ' East Side' },
+	[3] =  { ['coords'] = vector4(-676.81, -877.94, 0, 324.9), ['info'] = ' Wei Cheng' },
 }
 
 local carpick = {
@@ -86,20 +86,20 @@ function CreateOxyVehicle()
 
     local spawnpoint = 1
     for i = 1, #carspawns do
-	    local caisseo = GetClosestVehicle(carspawns[i]["x"], carspawns[i]["y"], carspawns[i]["z"], 3.500, 0, 70)
+	    local caisseo = GetClosestVehicle(carspawns[i]['coords']["x"], carspawns[i]['coords']["y"], carspawns[i]['coords']["z"], 3.500, 0, 70)
 		if not DoesEntityExist(caisseo) then
 			spawnpoint = i
 		end
     end
 
-    oxyVehicle = CreateVehicle(car, carspawns[spawnpoint]["x"], carspawns[spawnpoint]["y"], carspawns[spawnpoint]["z"], carspawns[spawnpoint]["h"], true, false)
+    oxyVehicle = CreateVehicle(car, carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], carspawns[spawnpoint]['coords']["w"], true, false)
     local plt = GetVehicleNumberPlateText(oxyVehicle)
     SetVehicleHasBeenOwnedByPlayer(oxyVehicle,true)
 
     while true do
     	Citizen.Wait(1)
-    	 DrawText3Ds(carspawns[spawnpoint]["x"], carspawns[spawnpoint]["y"], carspawns[spawnpoint]["z"], "Your Delivery Car (Stolen).")
-    	 if #(GetEntityCoords(PlayerPedId()) - vector3(carspawns[spawnpoint]["x"], carspawns[spawnpoint]["y"], carspawns[spawnpoint]["z"])) < 8.0 then
+    	 DrawText3Ds(carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], "Your Delivery Car (Stolen).")
+    	 if #(GetEntityCoords(PlayerPedId()) - vector3(carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"])) < 8.0 then
     	 	return
     	 end
     end
@@ -119,7 +119,7 @@ function CreateOxyPed()
     end
 
 
-	deliveryPed = CreatePed(pedType, hashKey, OxyDropOffs[rnd]["x"],OxyDropOffs[rnd]["y"],OxyDropOffs[rnd]["z"], OxyDropOffs[rnd]["h"], 0, 0)
+	deliveryPed = CreatePed(pedType, hashKey, OxyDropOffs[rnd]['coords']["x"],OxyDropOffs[rnd]['coords']["y"],OxyDropOffs[rnd]['coords']["z"], OxyDropOffs[rnd]['coords']["w"], 0, 0)
 	
 
     ClearPedTasks(deliveryPed)
@@ -157,7 +157,7 @@ end
 function CreateBlip()
 	DeleteBlip()
 	if OxyRun then
-		blip = AddBlipForCoord(OxyDropOffs[rnd]["x"],OxyDropOffs[rnd]["y"],OxyDropOffs[rnd]["z"])
+		blip = AddBlipForCoord(OxyDropOffs[rnd]['coords']["x"],OxyDropOffs[rnd]['coords']["y"],OxyDropOffs[rnd]['coords']["z"])
 	end
     
     SetBlipSprite(blip, 51)
@@ -283,7 +283,7 @@ AddEventHandler("oxydelivery:client", function()
 
 		Citizen.Wait(1)
 		local plycoords = GetEntityCoords(PlayerPedId())
-		local dstcheck = #(plycoords - vector3(OxyDropOffs[rnd]["x"],OxyDropOffs[rnd]["y"],OxyDropOffs[rnd]["z"])) 
+		local dstcheck = #(plycoords - vector3(OxyDropOffs[rnd]['coords']["x"],OxyDropOffs[rnd]['coords']["y"],OxyDropOffs[rnd]['coords']["z"])) 
 		local oxyVehCoords = GetEntityCoords(oxyVehicle)
 		local dstcheck2 = #(plycoords - oxyVehCoords) 
 
@@ -331,11 +331,11 @@ Citizen.CreateThread(function()
     while true do
 
 	    Citizen.Wait(1)
-	    local dropOff6 = #(GetEntityCoords(PlayerPedId()) - vector3(pillWorker["x"],pillWorker["y"],pillWorker["z"]))
+	    local dropOff6 = #(GetEntityCoords(PlayerPedId()) - vector3(pillWorker['coords']["x"],pillWorker['coords']["y"],pillWorker['coords']["z"]))
 
 		if dropOff6 < 1.6 and not OxyRun then
 
-			DrawText3Ds(pillWorker["x"],pillWorker["y"],pillWorker["z"], "[E] $6,500 - Delivery Job (Payment Cash + Oxy)") 
+			DrawText3Ds(pillWorker['coords']["x"],pillWorker['coords']["y"],pillWorker['coords']["z"], "[E] $6,500 - Delivery Job (Payment Cash + Oxy)") 
 			if IsControlJustReleased(0,38) then
 				TriggerServerEvent("oxydelivery:server")
 				Citizen.Wait(1000)
@@ -398,7 +398,7 @@ Citizen.CreateThread(function()
 
 				local plycoords = GetEntityCoords(PlayerPedId())
 
-				local dstcheck = #(plycoords - vector3(drugLocs[i]["x"],drugLocs[i]["y"],drugLocs[i]["z"])) 
+				local dstcheck = #(plycoords - vector3(drugLocs[i]['coords']["x"],drugLocs[i]['coords']["y"],drugLocs[i]['coords']["z"])) 
 
 			
 
@@ -406,13 +406,13 @@ Citizen.CreateThread(function()
 
 					close = true
 
-					local job = exports["isPed"]:isPed("job")
+					local job = QBCore.Functions.GetPlayerData().job.name
 
 					if job ~= "police" then
 
 						local price = 100
 
-			    		DrawText3Ds(drugLocs[i]["x"],drugLocs[i]["y"],drugLocs[i]["z"], "[E] $" .. price .. " offer to sell stolen goods (12).") 
+			    		DrawText3Ds(drugLocs[i]['coords']["x"],drugLocs[i]['coords']["y"],drugLocs[i]['coords']["z"], "[E] $" .. price .. " offer to sell stolen goods (12).") 
 				    	
 				    	if IsControlJustReleased(0,38) then
 

@@ -18,7 +18,7 @@ local OxyDropOffs = {
 	[4] =  { ['coords'] = vector4(130.3, -246.26,  51.45, 219.63), ['info'] = ' 4' },
 	[5] =  { ['coords'] = vector4(198.1, -162.11, 56.35, 340.09), ['info'] = ' 5' },
 	[6] =  { ['coords'] = vector4(341.0, -184.71, 58.07, 159.33), ['info'] = ' 6' },
-	[7] =  { ['coords'] = vector4(-26.96, -368.45, 39.69, 251.12, ['info'] = ' 7' },
+	[7] =  { ['coords'] = vector4(-26.96, -368.45, 39.69, 251.12), ['info'] = ' 7' },
 	[8] =  { ['coords'] = vector4(-155.88, -751.76, 33.76, 251.82), ['info'] = ' 8' },
 
 	[9] =  { ['coords'] = vector4(-305.02, -226.17, 36.29, 306.04), ['info'] = ' chewy1' },
@@ -56,7 +56,7 @@ local oxyPeds = {
 
 
 local drugLocs = {
-	[1] =  { ['coords'] = vector4(131.94, -1937.95,= 0, 118.59), ['info'] = ' Grove Stash' },
+	[1] =  { ['coords'] = vector4(131.94, -1937.95, 0, 118.59), ['info'] = ' Grove Stash' },
 	[2] =  { ['coords'] = vector4(1390.84, -1507.94, 0, 29.6), ['info'] = ' East Side' },
 	[3] =  { ['coords'] = vector4(-676.81, -877.94, 0, 324.9), ['info'] = ' Wei Cheng' },
 }

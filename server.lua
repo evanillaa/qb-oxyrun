@@ -1,8 +1,3 @@
-QBCore = nil
-
-TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
-
--- Oxy Run
 RegisterServerEvent('oxydelivery:server')
 AddEventHandler('oxydelivery:server', function()
 	local player = QBCore.Functions.GetPlayer(source)

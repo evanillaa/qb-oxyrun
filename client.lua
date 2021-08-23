@@ -339,6 +339,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
+		Citizen.Wait(5)
 		if OxyRun then
 			if not DoesEntityExist(oxyVehicle) or GetVehicleEngineHealth(oxyVehicle) < 200.0 or GetVehicleBodyHealth(oxyVehicle) < 200.0 then
 				OxyRun = false

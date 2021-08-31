@@ -86,7 +86,7 @@ function CreateOxyVehicle()
     oxyVehicle = CreateVehicle(car, carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], carspawns[spawnpoint]['coords']["w"], true, false)
     local plt = GetVehicleNumberPlateText(oxyVehicle)
     SetVehicleHasBeenOwnedByPlayer(oxyVehicle,true)
-
+	TriggerEvent('vehiclekeys:client:SetOwner', plt)
     while true do
 		Citizen.Wait(1)
 		DrawText3Ds(carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], "Your Delivery Car (Stolen).")
@@ -367,8 +367,8 @@ AddEventHandler("oxydelivery:startDealing", function()
 
 	PlayAmbientSpeech1(NearNPC, "Chat_Resp", "SPEECH_PARAMS_FORCE", 1)
 	salecount = 0
+	CreateOxyVehicle()
 	OxyRun = true
 	firstdeal = true
-	CreateOxyVehicle()
 	QBCore.Functions.Notify('A Car Has Been Provided. Your GPS Will Be Updated With Locations Soon', 'success')
 end)

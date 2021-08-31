@@ -86,7 +86,7 @@ function CreateOxyVehicle()
     oxyVehicle = CreateVehicle(car, carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], carspawns[spawnpoint]['coords']["w"], true, false)
     local plt = GetVehicleNumberPlateText(oxyVehicle)
     SetVehicleHasBeenOwnedByPlayer(oxyVehicle,true)
-	TriggerEvent('vehiclekeys:client:SetOwner', plt)
+    TriggerEvent('vehiclekeys:client:SetOwner', plt)
     while true do
 		Citizen.Wait(1)
 		DrawText3Ds(carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], "Your Delivery Car (Stolen).")

@@ -12,15 +12,14 @@ local OxyDropOffs = {
 	[7] =  { ['coords'] = vector4(-26.96, -368.45, 39.69, 251.12), ['info'] = ' 7' },
 	[8] =  { ['coords'] = vector4(-155.88, -751.76, 33.76, 251.82), ['info'] = ' 8' },
 
-	[9] =  { ['coords'] = vector4(-305.02, -226.17, 36.29, 306.04), ['info'] = ' chewy1' },
-	[10] =  { ['coords'] = vector4(-347.19, -791.04, 33.97, 3.06), ['info'] = ' biscuts2' },
-	[11] =  { ['coords'] = vector4(-703.75, -932.93, 19.22, 87.86), ['info'] = ' are3' },
-	[12] =  { ['coords'] = vector4(-659.35, -256.83, 36.23, 118.92), ['info'] = ' only4' },
-	[13] =  { ['coords'] = vector4(-934.18, -124.28, 37.77, 205.79), ['info'] = ' nice5' },
-	[14] =  { ['coords'] = vector4(-1214.3, -317.57, 37.75, 18.39), ['info'] = ' ifthey6' },
-	[15] =  { ['coords'] = vector4(-822.83, -636.97, 27.9, 160.23), ['info'] = ' contain7' },
-	[16] =  { ['coords'] = vector4(308.04, -1386.09, 31.79, 47.23), ['info'] = ' chocolate' },
-
+	[9] =   { ['coords'] = vector4(-305.02, -226.17, 36.29, 306.04), ['info'] = ' 9 ' },
+	[10] =  { ['coords'] = vector4(-347.19, -791.04, 33.97, 3.06), ['info'] = ' 10 ' },
+	[11] =  { ['coords'] = vector4(-703.75, -932.93, 19.22, 87.86), ['info'] = ' 11 ' },
+	[12] =  { ['coords'] = vector4(-659.35, -256.83, 36.23, 118.92), ['info'] = ' 12 ' },
+	[13] =  { ['coords'] = vector4(-934.18, -124.28, 37.77, 205.79), ['info'] = ' 13 ' },
+	[14] =  { ['coords'] = vector4(-1214.3, -317.57, 37.75, 18.39), ['info'] = ' 14 ' },
+	[15] =  { ['coords'] = vector4(-822.83, -636.97, 27.9, 160.23), ['info'] = ' 15 ' },
+	[16] =  { ['coords'] = vector4(308.04, -1386.09, 31.79, 47.23), ['info'] = ' 16 ' },
 }
 
 local carspawns = {
@@ -34,7 +33,7 @@ local carspawns = {
 	[8] =  { ['coords'] = vector4(77.9, -1547.45, 29.47, 53.24), ['info'] = ' car 7' },
 }
 
-local pillWorker = { ['coords'] = vector4(68.7, -1569.87, 29.6, 230.65), ['info'] = 'boop bap' }
+local pillWorker = { ['coords'] = vector4(68.7, -1569.87, 29.6, 230.65), ['info'] = ' store ' }
 
 local rnd = 0
 local blip = 0
@@ -43,13 +42,6 @@ local deliveryPed = 0
 local oxyPeds = {
 	'a_m_y_stwhi_02',
 	'a_m_y_stwhi_01'
-}
-
-
-local drugLocs = {
-	[1] =  { ['coords'] = vector4(131.94, -1937.95, 0, 118.59), ['info'] = ' Grove Stash' },
-	[2] =  { ['coords'] = vector4(1390.84, -1507.94, 0, 29.6), ['info'] = ' East Side' },
-	[3] =  { ['coords'] = vector4(-676.81, -877.94, 0, 324.9), ['info'] = ' Wei Cheng' },
 }
 
 local carpick = {
@@ -86,7 +78,7 @@ function CreateOxyVehicle()
     oxyVehicle = CreateVehicle(car, carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], carspawns[spawnpoint]['coords']["w"], true, false)
     local plt = GetVehicleNumberPlateText(oxyVehicle)
     SetVehicleHasBeenOwnedByPlayer(oxyVehicle,true)
-    TriggerEvent('vehiclekeys:client:SetOwner', plt)
+	TriggerEvent('vehiclekeys:client:SetOwner', plt)
     while true do
 		Citizen.Wait(1)
 		DrawText3Ds(carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], "Your Delivery Car (Stolen).")
@@ -122,7 +114,6 @@ function CreateOxyPed()
     SetPedHearingRange(deliveryPed, 0.0)
     SetPedAlertness(deliveryPed, 0)
     SetPedKeepTask(deliveryPed, true)
-
 end
 
 function DeleteCreatedPed()
@@ -178,7 +169,7 @@ function giveAnim()
             TaskPlayAnim( deliveryPed, "mp_safehouselost@", "package_dropoff", 8.0, 1.0, -1, 16, 0, 0, 0, 0 )
         else
             TaskPlayAnim( deliveryPed, "mp_safehouselost@", "package_dropoff", 8.0, 1.0, -1, 16, 0, 0, 0, 0 )
-        end     
+        end
     end
 end
 
@@ -232,7 +223,7 @@ function DoDropOff()
 			Citizen.Wait(2000)
 			QBCore.Functions.Notify('The delivery was on point, your GPS will be updated with the next drop off', 'success')
 		else
-			QBCore.Functions.Notify('The Drop Off Failed', 'error')
+			QBCore.Functions.Notify('The drop-off failed', 'error')
 		end
 	
 		DeleteCreatedPed()
@@ -256,7 +247,7 @@ end
 
 RegisterNetEvent("oxydelivery:client")
 AddEventHandler("oxydelivery:client", function()
-
+	
 	if tasking then
 		return
 	end
@@ -282,7 +273,7 @@ AddEventHandler("oxydelivery:client", function()
 			pedCreated = true
 			DeleteCreatedPed()
 			CreateOxyPed()
-			QBCore.Functions.Notify('You Are Close To The Drop Off Point')
+			QBCore.Functions.Notify('You are close to the drop-off point')
 		end
 		toolong = toolong - 1
 		if toolong < 0 then
@@ -291,7 +282,7 @@ AddEventHandler("oxydelivery:client", function()
 			SetEntityAsNoLongerNeeded(oxyVehicle)
 			tasking = false
 			OxyRun = false
-			QBCore.Functions.Notify('You Took Too Long', 'error')
+			QBCore.Functions.Notify('You took too long', 'error')
 		end
 		if dstcheck < 2.0 and pedCreated then
 
@@ -305,11 +296,8 @@ AddEventHandler("oxydelivery:client", function()
 				DoDropOff()
 				tasking = false
 			end
-
 		end
-
 	end
-	
 
 	DeleteCreatedPed()
 	DeleteBlip()
@@ -331,9 +319,7 @@ Citizen.CreateThread(function()
 				Citizen.Wait(1000)
 			end
 		end
-
     end
-
 end)
 
 
@@ -370,5 +356,5 @@ AddEventHandler("oxydelivery:startDealing", function()
 	CreateOxyVehicle()
 	OxyRun = true
 	firstdeal = true
-	QBCore.Functions.Notify('A Car Has Been Provided. Your GPS Will Be Updated With Locations Soon', 'success')
+	QBCore.Functions.Notify('A car has been provided. Your GPS will be updated with locations soon', 'success')
 end)

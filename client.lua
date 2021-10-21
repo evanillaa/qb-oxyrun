@@ -181,7 +181,7 @@ function DoDropOff()
 	playerAnim()
 	Citizen.Wait(800)
 
-	PlayAmbientSpeech1(deliveryPed, "Chat_State", "Speech_Params_Force")
+	PlayPedAmbientSpeechNative(deliveryPed, "Chat_State", "Speech_Params_Force")
 
 	if DoesEntityExist(deliveryPed) and not IsEntityDead(deliveryPed) then
 
@@ -292,7 +292,7 @@ AddEventHandler("oxydelivery:client", function()
 			if not IsPedInAnyVehicle(PlayerPedId()) and IsControlJustReleased(0,38) then
 				TaskTurnPedToFaceEntity(deliveryPed, PlayerPedId(), 1.0)
 				Citizen.Wait(1500)
-				PlayAmbientSpeech1(deliveryPed, "Generic_Hi", "Speech_Params_Force")
+				PlayPedAmbientSpeechNative(deliveryPed, "Generic_Hi", "Speech_Params_Force")
 				DoDropOff()
 				tasking = false
 			end
@@ -351,7 +351,7 @@ RegisterNetEvent("oxydelivery:startDealing")
 AddEventHandler("oxydelivery:startDealing", function()
     local NearNPC = GetClosestPed()
 
-	PlayAmbientSpeech1(NearNPC, "Chat_Resp", "SPEECH_PARAMS_FORCE", 1)
+	PlayPedAmbientSpeechNative(NearNPC, "Chat_Resp", "SPEECH_PARAMS_FORCE", 1)
 	salecount = 0
 	CreateOxyVehicle()
 	OxyRun = true

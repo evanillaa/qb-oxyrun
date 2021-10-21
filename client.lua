@@ -1,195 +1,140 @@
+-- Variables
+
+QBCore = exports['qb-core']:GetCoreObject()
 local tasking = false
 local drugStorePed = 0
 local oxyVehicle = 0
-
-local OxyDropOffs = {
-	[1] =  { ['coords'] = vector4(74.5, -762.17, 31.68, 160.98), ['info'] = ' 1' },
-	[2] =  { ['coords'] = vector4(100.58, -644.11, 44.23, 69.11), ['info'] = ' 2' },
-	[3] =  { ['coords'] = vector4(175.45, -445.95, 41.1, 92.72), ['info'] = ' 3' },
-	[4] =  { ['coords'] = vector4(130.3, -246.26,  51.45, 219.63), ['info'] = ' 4' },
-	[5] =  { ['coords'] = vector4(198.1, -162.11, 56.35, 340.09), ['info'] = ' 5' },
-	[6] =  { ['coords'] = vector4(341.0, -184.71, 58.07, 159.33), ['info'] = ' 6' },
-	[7] =  { ['coords'] = vector4(-26.96, -368.45, 39.69, 251.12), ['info'] = ' 7' },
-	[8] =  { ['coords'] = vector4(-155.88, -751.76, 33.76, 251.82), ['info'] = ' 8' },
-
-	[9] =   { ['coords'] = vector4(-305.02, -226.17, 36.29, 306.04), ['info'] = ' 9 ' },
-	[10] =  { ['coords'] = vector4(-347.19, -791.04, 33.97, 3.06), ['info'] = ' 10 ' },
-	[11] =  { ['coords'] = vector4(-703.75, -932.93, 19.22, 87.86), ['info'] = ' 11 ' },
-	[12] =  { ['coords'] = vector4(-659.35, -256.83, 36.23, 118.92), ['info'] = ' 12 ' },
-	[13] =  { ['coords'] = vector4(-934.18, -124.28, 37.77, 205.79), ['info'] = ' 13 ' },
-	[14] =  { ['coords'] = vector4(-1214.3, -317.57, 37.75, 18.39), ['info'] = ' 14 ' },
-	[15] =  { ['coords'] = vector4(-822.83, -636.97, 27.9, 160.23), ['info'] = ' 15 ' },
-	[16] =  { ['coords'] = vector4(308.04, -1386.09, 31.79, 47.23), ['info'] = ' 16 ' },
-}
-
-local carspawns = {
-	[1] =  { ['coords'] = vector4(79.85, -1544.99, 29.47, 51.55), ['info'] = ' car 8' },
-	[2] =  { ['coords'] = vector4(66.93, -1561.73, 29.47, 45.73), ['info'] = ' car 1' },
-	[3] =  { ['coords'] = vector4(68.57, -1559.53, 29.47, 50.6), ['info'] = ' car 2' },
-	[4] =  { ['coords'] = vector4(70.4, -1557.12, 29.47, 51.18), ['info'] = ' car 3' },
-	[5] =  { ['coords'] = vector4(72.22, -1554.63, 29.47, 50.32), ['info'] = ' car 4' },
-	[6] =  { ['coords'] = vector4(73.99, -1552.22, 29.47, 52.47), ['info'] = ' car 5' },
-	[7] =  { ['coords'] = vector4(76.06, -1549.87, 29.47, 51.53), ['info'] = ' car 6' },
-	[8] =  { ['coords'] = vector4(77.9, -1547.45, 29.47, 53.24), ['info'] = ' car 7' },
-}
-
-local pillWorker = { ['coords'] = vector4(68.7, -1569.87, 29.6, 230.65), ['info'] = ' store ' }
-
 local rnd = 0
 local blip = 0
 local deliveryPed = 0
 
-local oxyPeds = {
-	'a_m_y_stwhi_02',
-	'a_m_y_stwhi_01'
-}
+-- Functions
 
-local carpick = {
-    [1] = "felon",
-    [2] = "kuruma",
-    [3] = "sultan",
-    [4] = "granger",
-    [5] = "tailgater",
-}
-
-function CreateOxyVehicle()
-
+local function CreateOxyVehicle()
 	if DoesEntityExist(oxyVehicle) then
 
 	    SetVehicleHasBeenOwnedByPlayer(oxyVehicle,false)
 		SetEntityAsNoLongerNeeded(oxyVehicle)
 		DeleteEntity(oxyVehicle)
 	end
-
-    local car = GetHashKey(carpick[math.random(#carpick)])
+	
+    local car = GetHashKey(Config.carpick[math.random(#Config.carpick)])
     RequestModel(car)
     while not HasModelLoaded(car) do
-        Citizen.Wait(0)
+        Wait(0)
     end
 
     local spawnpoint = 1
-    for i = 1, #carspawns do
-	    local caisseo = GetClosestVehicle(carspawns[i]['coords']["x"], carspawns[i]['coords']["y"], carspawns[i]['coords']["z"], 3.500, 0, 70)
+    for i = 1, #Config.carspawns do
+	    local caisseo = GetClosestVehicle(Config.carspawns[i]['coords']["x"], Config.carspawns[i]['coords']["y"], Config.carspawns[i]['coords']["z"], 3.500, 0, 70)
 		if not DoesEntityExist(caisseo) then
 			spawnpoint = i
 		end
     end
 
-    oxyVehicle = CreateVehicle(car, carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], carspawns[spawnpoint]['coords']["w"], true, false)
+    oxyVehicle = CreateVehicle(car, Config.carspawns[spawnpoint]['coords']["x"], Config.carspawns[spawnpoint]['coords']["y"], Config.carspawns[spawnpoint]['coords']["z"], Config.carspawns[spawnpoint]['coords']["w"], true, false)
     local plt = GetVehicleNumberPlateText(oxyVehicle)
     SetVehicleHasBeenOwnedByPlayer(oxyVehicle,true)
 	TriggerEvent('vehiclekeys:client:SetOwner', plt)
     while true do
-		Citizen.Wait(1)
-		DrawText3Ds(carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"], "Your Delivery Car (Stolen).")
-		if #(GetEntityCoords(PlayerPedId()) - vector3(carspawns[spawnpoint]['coords']["x"], carspawns[spawnpoint]['coords']["y"], carspawns[spawnpoint]['coords']["z"])) < 8.0 then
+		Wait(1)
+		DrawText3Ds(Config.carspawns[spawnpoint]['coords']["x"], Config.carspawns[spawnpoint]['coords']["y"], Config.carspawns[spawnpoint]['coords']["z"], "Your Delivery Car (Stolen).")
+		if #(GetEntityCoords(PlayerPedId()) - vector3(Config.carspawns[spawnpoint]['coords']["x"], Config.carspawns[spawnpoint]['coords']["y"], Config.carspawns[spawnpoint]['coords']["z"])) < 8.0 then
 			return
 		end
     end
 end
 
-function CreateOxyPed()
-
+local function CreateOxyPed()
     local hashKey = `a_m_y_stwhi_01`
-
     local pedType = 5
-
     RequestModel(hashKey)
     while not HasModelLoaded(hashKey) do
         RequestModel(hashKey)
-        Citizen.Wait(100)
+        Wait(100)
     end
-
-
-	deliveryPed = CreatePed(pedType, hashKey, OxyDropOffs[rnd]['coords']["x"],OxyDropOffs[rnd]['coords']["y"],OxyDropOffs[rnd]['coords']["z"], OxyDropOffs[rnd]['coords']["w"], 0, 0)
-	
-
+	deliveryPed = CreatePed(pedType, hashKey, Config.OxyDropOffs[rnd]['coords']["x"],Config.OxyDropOffs[rnd]['coords']["y"],Config.OxyDropOffs[rnd]['coords']["z"], Config.OxyDropOffs[rnd]['coords']["w"], 0, 0)
     ClearPedTasks(deliveryPed)
     ClearPedSecondaryTask(deliveryPed)
     TaskSetBlockingOfNonTemporaryEvents(deliveryPed, true)
     SetPedFleeAttributes(deliveryPed, 0, 0)
     SetPedCombatAttributes(deliveryPed, 17, 1)
-
     SetPedSeeingRange(deliveryPed, 0.0)
     SetPedHearingRange(deliveryPed, 0.0)
     SetPedAlertness(deliveryPed, 0)
     SetPedKeepTask(deliveryPed, true)
 end
 
-function DeleteCreatedPed()
+local function DeleteCreatedPed()
 	if DoesEntityExist(deliveryPed) then 
 		SetPedKeepTask(deliveryPed, false)
 		TaskSetBlockingOfNonTemporaryEvents(deliveryPed, false)
 		ClearPedTasks(deliveryPed)
 		TaskWanderStandard(deliveryPed, 10.0, 10)
 		SetPedAsNoLongerNeeded(deliveryPed)
-
-		Citizen.Wait(20000)
+		Wait(20000)
 		DeletePed(deliveryPed)
 	end
 end
 
-function DeleteBlip()
+local function DeleteBlip()
 	if DoesBlipExist(blip) then
 		RemoveBlip(blip)
 	end
 end
 
-function CreateBlip()
+local function CreateBlip()
 	DeleteBlip()
 	if OxyRun then
-		blip = AddBlipForCoord(OxyDropOffs[rnd]['coords']["x"],OxyDropOffs[rnd]['coords']["y"],OxyDropOffs[rnd]['coords']["z"])
+		blip = AddBlipForCoord(Config.OxyDropOffs[rnd]['coords']["x"],Config.OxyDropOffs[rnd]['coords']["y"],Config.OxyDropOffs[rnd]['coords']["z"])
 	end
     
-    SetBlipSprite(blip, 51)
+    SetBlipSprite(blip, 514)
 	SetBlipScale(blip, 1.0)
-	SetBlipColour(blip, 1)
+	SetBlipColour(blip, 0)
     SetBlipAsShortRange(blip, false)
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentString("Drop Off")
     EndTextCommandSetBlipName(blip)
 end
 
-function loadAnimDict( dict )
+local function loadAnimDict( dict )
     while ( not HasAnimDictLoaded( dict ) ) do
         RequestAnimDict( dict )
-        Citizen.Wait( 5 )
+        Wait( 5 )
     end
 end 
 
-function playerAnim()
+local function playerAnim()
 	loadAnimDict( "mp_safehouselost@" )
     TaskPlayAnim( PlayerPedId(), "mp_safehouselost@", "package_dropoff", 8.0, 1.0, -1, 16, 0, 0, 0, 0 )
 end
 
-function giveAnim()
-    if ( DoesEntityExist( deliveryPed ) and not IsEntityDead( deliveryPed ) ) then 
+local function giveAnim()
+    if (DoesEntityExist(deliveryPed) and not IsEntityDead(deliveryPed)) then 
         loadAnimDict( "mp_safehouselost@" )
-        if ( IsEntityPlayingAnim( deliveryPed, "mp_safehouselost@", "package_dropoff", 3 ) ) then 
-            TaskPlayAnim( deliveryPed, "mp_safehouselost@", "package_dropoff", 8.0, 1.0, -1, 16, 0, 0, 0, 0 )
+        if (IsEntityPlayingAnim(deliveryPed, "mp_safehouselost@", "package_dropoff", 3)) then 
+            TaskPlayAnim(deliveryPed, "mp_safehouselost@", "package_dropoff", 8.0, 1.0, -1, 16, 0, 0, 0, 0)
         else
-            TaskPlayAnim( deliveryPed, "mp_safehouselost@", "package_dropoff", 8.0, 1.0, -1, 16, 0, 0, 0, 0 )
+            TaskPlayAnim(deliveryPed, "mp_safehouselost@", "package_dropoff", 8.0, 1.0, -1, 16, 0, 0, 0, 0)
         end
     end
 end
 
-function DoDropOff()
+local function DoDropOff()
 	local success = true
 	local OxyChance = math.random(1,1000)
-
-	Citizen.Wait(1000)
+	Wait(1000)
 	playerAnim()
-	Citizen.Wait(800)
+	Wait(800)
 
 	PlayPedAmbientSpeechNative(deliveryPed, "Chat_State", "Speech_Params_Force")
-
 	if DoesEntityExist(deliveryPed) and not IsEntityDead(deliveryPed) then
-
 		local counter = math.random(50,200)
 		while counter > 0 do
 			local crds = GetEntityCoords(deliveryPed)
 			counter = counter - 1
-			Citizen.Wait(1)
+			Wait(1)
 		end
 	
 		if success then
@@ -197,7 +142,7 @@ function DoDropOff()
 			while counter > 0 do
 				local crds = GetEntityCoords(deliveryPed)
 				counter = counter - 1
-				Citizen.Wait(1)
+				Wait(1)
 			end
 			giveAnim()
 		end
@@ -220,7 +165,7 @@ function DoDropOff()
 				TriggerServerEvent("oxydelivery:receivemoneyyy")
 			end
 
-			Citizen.Wait(2000)
+			Wait(2000)
 			QBCore.Functions.Notify('The delivery was on point, your GPS will be updated with the next drop off', 'success')
 		else
 			QBCore.Functions.Notify('The drop-off failed', 'error')
@@ -245,26 +190,21 @@ function DrawText3Ds(x,y,z, text)
     DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, 41, 11, 41, 68)
 end
 
-RegisterNetEvent("oxydelivery:client")
-AddEventHandler("oxydelivery:client", function()
+-- Events
 
+RegisterNetEvent('oxydelivery:client', function()
 	if tasking then
 		return
 	end
-	
-	rnd = math.random(1,#OxyDropOffs)
-
+	rnd = math.random(1,#Config.OxyDropOffs)
 	CreateBlip()
-
 	local pedCreated = false
-
 	tasking = true
 	local toolong = 600000
 	while tasking do
-
-		Citizen.Wait(1)
+		Wait(1)
 		local plycoords = GetEntityCoords(PlayerPedId())
-		local dstcheck = #(plycoords - vector3(OxyDropOffs[rnd]['coords']["x"],OxyDropOffs[rnd]['coords']["y"],OxyDropOffs[rnd]['coords']["z"])) 
+		local dstcheck = #(plycoords - vector3(Config.OxyDropOffs[rnd]['coords']["x"],Config.OxyDropOffs[rnd]['coords']["y"],Config.OxyDropOffs[rnd]['coords']["z"])) 
 		local oxyVehCoords = GetEntityCoords(oxyVehicle)
 		local dstcheck2 = #(plycoords - oxyVehCoords) 
 
@@ -285,47 +225,50 @@ AddEventHandler("oxydelivery:client", function()
 			QBCore.Functions.Notify('You took too long', 'error')
 		end
 		if dstcheck < 2.0 and pedCreated then
-
 			local crds = GetEntityCoords(deliveryPed)
-			DrawText3Ds(crds["x"],crds["y"],crds["z"], "[E]")  
-
+			DrawText3Ds(crds["x"],crds["y"],crds["z"], "[E]")
 			if not IsPedInAnyVehicle(PlayerPedId()) and IsControlJustReleased(0,38) then
 				TaskTurnPedToFaceEntity(deliveryPed, PlayerPedId(), 1.0)
-				Citizen.Wait(1500)
+				Wait(1500)
 				PlayPedAmbientSpeechNative(deliveryPed, "Generic_Hi", "Speech_Params_Force")
 				DoDropOff()
 				tasking = false
 			end
 		end
 	end
-
 	DeleteCreatedPed()
 	DeleteBlip()
-
 end)
 
-Citizen.CreateThread(function()
+RegisterNetEvent('oxydelivery:startDealing', function()
+    local NearNPC = GetClosestPed()
+	PlayPedAmbientSpeechNative(NearNPC, "Chat_Resp", "SPEECH_PARAMS_FORCE", 1)
+	salecount = 0
+	CreateOxyVehicle()
+	OxyRun = true
+	firstdeal = true
+	QBCore.Functions.Notify('A car has been provided. Your GPS will be updated with locations soon', 'success')
+end)
 
+-- Threads
+
+CreateThread(function()
     while true do
-
-		Citizen.Wait(1)
-		local dropOff6 = #(GetEntityCoords(PlayerPedId()) - vector3(pillWorker['coords']["x"],pillWorker['coords']["y"],pillWorker['coords']["z"]))
-
+		Wait(1)
+		local dropOff6 = #(GetEntityCoords(PlayerPedId()) - vector3(Config.pillWorker['coords']["x"],Config.pillWorker['coords']["y"],Config.pillWorker['coords']["z"]))
 		if dropOff6 < 1.6 and not OxyRun then
-
-			DrawText3Ds(pillWorker['coords']["x"],pillWorker['coords']["y"],pillWorker['coords']["z"], "[E] $6,500 - Delivery Job (Payment Cash + Oxy)") 
+			DrawText3Ds(Config.pillWorker['coords']["x"],Config.pillWorker['coords']["y"],Config.pillWorker['coords']["z"], "[E] $6,500 - Delivery Job (Payment Cash + Oxy)") 
 			if IsControlJustReleased(0,38) then
 				TriggerServerEvent("oxydelivery:server")
-				Citizen.Wait(1000)
+				Wait(1000)
 			end
 		end
     end
 end)
 
-
-Citizen.CreateThread(function()
+CreateThread(function()
 	while true do
-		Citizen.Wait(5)
+		Wait(5)
 		if OxyRun then
 			if not DoesEntityExist(oxyVehicle) or GetVehicleEngineHealth(oxyVehicle) < 200.0 or GetVehicleBodyHealth(oxyVehicle) < 200.0 then
 				OxyRun = false
@@ -333,28 +276,16 @@ Citizen.CreateThread(function()
 				QBCore.Functions.Notify("The dealer isn't giving you anymore locations due to the state of his car", "error")
 			else
 				if tasking then
-					Citizen.Wait(30000)
+					Wait(30000)
 				else
 					TriggerEvent("oxydelivery:client")  
 					salecount = salecount + 1
 					if salecount == Config.RunAmount then
-						Citizen.Wait(300000)
+						Wait(300000)
 						OxyRun = false
 					end
 				end
 			end
 		end
 	end
-end)
-
-RegisterNetEvent("oxydelivery:startDealing")
-AddEventHandler("oxydelivery:startDealing", function()
-    local NearNPC = GetClosestPed()
-
-	PlayPedAmbientSpeechNative(NearNPC, "Chat_Resp", "SPEECH_PARAMS_FORCE", 1)
-	salecount = 0
-	CreateOxyVehicle()
-	OxyRun = true
-	firstdeal = true
-	QBCore.Functions.Notify('A car has been provided. Your GPS will be updated with locations soon', 'success')
 end)
